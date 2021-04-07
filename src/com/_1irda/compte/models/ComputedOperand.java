@@ -23,7 +23,13 @@ public class ComputedOperand {
         switch (ope) {
             case ADDITION -> result = new Operand(leftOpe.getValue() + rightOpe.getValue());
             case SUBTRACTION -> result = new Operand(leftOpe.getValue() - rightOpe.getValue());
-            case MULTIPLICATION -> result = new Operand(leftOpe.getValue() * rightOpe.getValue());
+            case MULTIPLICATION -> {
+                if (leftOpe.getValue() != 1 || rightOpe.getValue() != 1) {
+                    result = new Operand(leftOpe.getValue() * rightOpe.getValue());
+                } else {
+                    result = new Operand(Integer.MAX_VALUE);
+                }
+            }
             case DIVISION -> {
                 if (isCorrect()) {
                     result = new Operand(leftOpe.getValue() / rightOpe.getValue());

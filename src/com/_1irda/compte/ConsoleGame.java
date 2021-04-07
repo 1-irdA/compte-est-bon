@@ -1,4 +1,4 @@
-package com._1irda.compte.test;
+package com._1irda.compte;
 
 import com._1irda.compte.models.Count;
 

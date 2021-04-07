@@ -32,10 +32,12 @@ public class Solver {
                 Arrays.stream(Operator.values()).forEach(operator -> {
                     ComputedOperand computedOperand = new ComputedOperand(leftOpe, rightOpe, operator);
                     int temp = computedOperand.getResultValue();
+                    /* temp is current better solution */
                     if (temp >= betterResult && temp <= toCompute) {
                         tempOperations[level] = getOperation(leftOpe, rightOpe, operator, temp);
                         betterResult = temp;
                         finalOperations = tempOperations.clone();
+                        /* sink into the tree */
                     } else if (temp < toCompute && ops.size() != 1) {
                         /* remove used operands and add result operand */
                         ArrayList<Operand> newOps = (ArrayList<Operand>) ops.clone();
@@ -46,6 +48,7 @@ public class Solver {
                         level += 1;
                         solve(newOps);
                         level -= 1;
+                        /* level up case unused */
                         tempOperations[level] = null;
                     }
                 });
