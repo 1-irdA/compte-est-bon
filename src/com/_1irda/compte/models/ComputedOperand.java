@@ -8,30 +8,30 @@ public class ComputedOperand {
 
     private final Operand rightOpe;
 
-    private final Operator ope;
+    private final Operator operator;
 
     private Operand result;
 
-    public ComputedOperand(Operand left, Operand right, Operator operator) {
+    public ComputedOperand(Operand left, Operand right, Operator arithmeticOperator) {
         leftOpe = left;
         rightOpe = right;
-        ope = operator;
+        operator = arithmeticOperator;
         compute();
     }
 
     private void compute() {
-        switch (ope) {
+        switch (operator) {
             case ADDITION -> result = new Operand(leftOpe.getValue() + rightOpe.getValue());
             case SUBTRACTION -> result = new Operand(leftOpe.getValue() - rightOpe.getValue());
             case MULTIPLICATION -> {
-                if (leftOpe.getValue() != 1 || rightOpe.getValue() != 1) {
+                if (isCorrectMultiplication()) {
                     result = new Operand(leftOpe.getValue() * rightOpe.getValue());
                 } else {
                     result = new Operand(Integer.MAX_VALUE);
                 }
             }
             case DIVISION -> {
-                if (isCorrect()) {
+                if (isCorrectDivision()) {
                     result = new Operand(leftOpe.getValue() / rightOpe.getValue());
                 } else {
                     result = new Operand(Integer.MAX_VALUE);
@@ -40,11 +40,23 @@ public class ComputedOperand {
         }
     }
 
-    private boolean isCorrect() {
+    private boolean isCorrectMultiplication() {
+        return leftOpe.getValue() != 1 && rightOpe.getValue() != 1;
+    }
+
+    private boolean isCorrectDivision() {
         return rightOpe.getValue() != 0 && rightOpe.getValue() != 1 && leftOpe.getValue() % rightOpe.getValue() == 0;
     }
 
-    public int getResultValue() {
-        return result.getValue();
+    public Operand getLeftOpe() {
+        return leftOpe;
+    }
+
+    public Operand getRightOpe() {
+        return rightOpe;
+    }
+
+    public Operand getResult() {
+        return result;
     }
 }

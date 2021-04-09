@@ -5,6 +5,7 @@ import com._1irda.compte.enums.Operator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 public class Solver {
 
@@ -31,7 +32,7 @@ public class Solver {
                 /* throughout each operator */
                 Arrays.stream(Operator.values()).forEach(operator -> {
                     ComputedOperand computedOperand = new ComputedOperand(leftOpe, rightOpe, operator);
-                    int temp = computedOperand.getResultValue();
+                    int temp = computedOperand.getResult().getValue();
                     /* temp is current better solution */
                     if (temp >= betterResult && temp <= toCompute) {
                         tempOperations[level] = getOperation(leftOpe, rightOpe, operator, temp);
@@ -62,6 +63,7 @@ public class Solver {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
+        builder.append("Computer solution :\n");
         Arrays.stream(finalOperations).filter(Objects::nonNull).forEach(v -> builder.append(v).append("\n"));
         return builder.toString();
     }
