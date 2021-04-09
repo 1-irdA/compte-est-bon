@@ -7,7 +7,7 @@ Game of "Compte est bon"
 **Build**
 
 ```sh
-docker build -t <name>
+docker build -t <name> .
 ```
 
 **Run**
