@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="compte-est-bon:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/compte_est_bon_jar</output-path>
+    <root id="archive" name="compte-est-bon.jar">
+      <element id="module-output" name="compte-est-bon" />
+    </root>
+  </artifact>
+</component>
