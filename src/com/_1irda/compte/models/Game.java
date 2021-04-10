@@ -49,6 +49,9 @@ public class Game {
     private void rules() {
         System.out.println("""
                             **************************** RULES ****************************
+                            You have 60 seconds to enter operations.
+                            If time is elapsed, you loose.
+                            If you enter a bad operation, you loose.
                             Enter operations line by line.
                             Available operators : x + - /
                             
