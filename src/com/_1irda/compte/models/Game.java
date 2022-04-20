@@ -183,11 +183,13 @@ public class Game {
     private void game() {
         draw = level.makeDraw();
         Solver solver = new Solver(draw.getToCompute());
-        ArrayList<Operand> copyDraw = (ArrayList<Operand>) draw.getOperands().clone();
+        ArrayList<Operand> copyDraw = new ArrayList<>(draw.getOperands());
 
         userInputOperations();
+
         double start = System.currentTimeMillis();
         solver.solve(copyDraw);
+
         System.out.println(solver);
         System.out.printf("Computer solving time : %f seconds\n", (System.currentTimeMillis() - start) / 1000.0);
     }

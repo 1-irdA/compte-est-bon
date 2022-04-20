@@ -18,8 +18,8 @@ public class ComputedOperand {
         operator = ope;
     }
 
-    private ComputedOperand compute() {
-        switch (operator) {
+    public ComputedOperand compute() {
+         switch (operator) {
             case ADDITION -> result = new Operand(left.getValue() + right.getValue());
             case SUBTRACTION -> result = new Operand(left.getValue() - right.getValue());
             case MULTIPLICATION -> {
@@ -36,6 +36,7 @@ public class ComputedOperand {
                     result = new Operand(Integer.MAX_VALUE);
                 }
             }
+            default -> result = new Operand(Integer.MAX_VALUE);
         }
         return this;
     }
@@ -48,11 +49,11 @@ public class ComputedOperand {
         return right.getValue() != 0 && right.getValue() != 1 && left.getValue() % right.getValue() == 0;
     }
 
-    public Operand getleft() {
+    public Operand getLeft() {
         return left;
     }
 
-    public Operand getright() {
+    public Operand getRight() {
         return right;
     }
 

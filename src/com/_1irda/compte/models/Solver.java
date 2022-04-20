@@ -5,7 +5,6 @@ import com._1irda.compte.enums.Operator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
-import java.util.function.Predicate;
 
 public class Solver {
 
@@ -28,40 +27,37 @@ public class Solver {
 
     public void solve(ArrayList<Operand> ops) {
 
-        ops.forEach(left -> {   
+        ops.forEach(left -> ops.forEach(right -> {
 
-            ops.forEach(right -> {
+            if (left != right) {
 
-                if (left != right) {
+                Arrays
+                    .stream(Operator.values())
+                    .forEach(operator -> {
 
-                    Arrays
-                        .stream(Operator.values())
-                        .forEach(operator -> {
-                    
-                        int temp = new ComputedOperand(left, right, operator)
-                                        .compute()
-                                        .getResult()
-                                        .getValue();
-                        tempOperations[level] = getOperation(left, right, operator, temp);
-                        
-                        /* temp is current better solution */
-                        if (temp >= betterResult && temp <= toCompute) {
-                            betterResult = temp;
-                            finalOperations = tempOperations.clone();
-                        } else if (temp < toCompute && ops.size() != 1) {                 
-                            ArrayList<Operand> newOps = new ArrayList<>(ops);
-                            newOps.remove(left);
-                            newOps.remove(right);
-                            newOps.add(new Operand(temp));
-                            level++;
-                            solve(newOps);
-                            level--;
-                            tempOperations[level] = null;
-                        }
-                    });
-                } 
-            });
-        });
+                    int temp = new ComputedOperand(left, right, operator)
+                                    .compute()
+                                    .getResult()
+                                    .getValue();
+                    tempOperations[level] = getOperation(left, right, operator, temp);
+
+                    /* temp is current better solution */
+                    if (temp >= betterResult && temp <= toCompute) {
+                        betterResult = temp;
+                        finalOperations = tempOperations.clone();
+                    } else if (temp < toCompute && ops.size() != 1) {
+                        ArrayList<Operand> newOps = new ArrayList<>(ops);
+                        newOps.remove(left);
+                        newOps.remove(right);
+                        newOps.add(new Operand(temp));
+                        level++;
+                        solve(newOps);
+                        level--;
+                        tempOperations[level] = null;
+                    }
+                });
+            }
+        }));
     }
 
     private String getOperation(Operand left, Operand right, Operator operator, int total) {

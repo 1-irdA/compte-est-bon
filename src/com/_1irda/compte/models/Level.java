@@ -8,7 +8,7 @@ public class Level {
 
     private static final int NB_OPERANDS = 6;
 
-    private double duration;
+    private final double duration;
 
     public Level() {
         duration = 60.0 * 1000;

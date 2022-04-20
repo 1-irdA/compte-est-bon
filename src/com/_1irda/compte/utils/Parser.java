@@ -17,9 +17,11 @@ public class Parser {
         toConvert = toConvert.replaceAll("\s", "");
         String[] operands = toParsableOperands(toConvert);
         String[] operators = toParsableOperators(toConvert);
-        ComputedOperand computedOperand = new ComputedOperand(new Operand(Integer.parseInt(operands[0])),
-                new Operand(Integer.parseInt(operands[1])),
-                toOperator(operators[0].charAt(0)));
+        ComputedOperand computedOperand =
+                new ComputedOperand(new Operand(Integer.parseInt(operands[0])),
+                                    new Operand(Integer.parseInt(operands[1])),
+                                    toOperator(operators[0].charAt(0)))
+                        .compute();
         return Integer.parseInt(operands[operands.length - 1]) == computedOperand.getResult().getValue()
                 ? computedOperand
                 : null;
