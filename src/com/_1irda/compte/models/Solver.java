@@ -61,7 +61,9 @@ public class Solver {
     }
 
     private String getOperation(Operand left, Operand right, Operator operator, int total) {
-        return left.getValue() + " " + operator.getSymbol() + " " + right.getValue() + " = " + total;
+        return total == Integer.MAX_VALUE 
+            ? null 
+            : left.getValue() + " " + operator.getSymbol() + " " + right.getValue() + " = " + total;
     }
 
     @Override
