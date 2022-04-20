@@ -27,44 +27,55 @@ public class Solver {
     }
 
     public void solve(ArrayList<Operand> ops) {
-        /* throughout each operand if there are different */
-        ops.forEach(leftOpe -> ops.stream().filter(rightOpe -> rightOpe != leftOpe).forEach(rightOpe -> {
-                /* throughout each operator */
-                Arrays.stream(Operator.values()).forEach(operator -> {
-                    ComputedOperand computedOperand = new ComputedOperand(leftOpe, rightOpe, operator);
-                    int temp = computedOperand.getResult().getValue();
-                    /* temp is current better solution */
-                    if (temp >= betterResult && temp <= toCompute) {
-                        tempOperations[level] = getOperation(leftOpe, rightOpe, operator, temp);
-                        betterResult = temp;
-                        finalOperations = tempOperations.clone();
-                        /* sink into the tree */
-                    } else if (temp < toCompute && ops.size() != 1) {
-                        /* remove used operands and add result operand */
-                        ArrayList<Operand> newOps = (ArrayList<Operand>) ops.clone();
-                        newOps.remove(leftOpe);
-                        newOps.remove(rightOpe);
-                        newOps.add(new Operand(temp));
-                        tempOperations[level] = getOperation(leftOpe, rightOpe, operator, temp);
-                        level += 1;
-                        solve(newOps);
-                        level -= 1;
-                        /* level up case unused */
-                        tempOperations[level] = null;
-                    }
-                });
-        }));
+
+        ops.forEach(left -> {   
+
+            ops.forEach(right -> {
+
+                if (left != right) {
+
+                    Arrays
+                        .stream(Operator.values())
+                        .forEach(operator -> {
+                    
+                        int temp = new ComputedOperand(left, right, operator)
+                                        .compute()
+                                        .getResult()
+                                        .getValue();
+                        tempOperations[level] = getOperation(left, right, operator, temp);
+                        
+                        /* temp is current better solution */
+                        if (temp >= betterResult && temp <= toCompute) {
+                            betterResult = temp;
+                            finalOperations = tempOperations.clone();
+                        } else if (temp < toCompute && ops.size() != 1) {                 
+                            ArrayList<Operand> newOps = new ArrayList<>(ops);
+                            newOps.remove(left);
+                            newOps.remove(right);
+                            newOps.add(new Operand(temp));
+                            level++;
+                            solve(newOps);
+                            level--;
+                            tempOperations[level] = null;
+                        }
+                    });
+                } 
+            });
+        });
     }
 
-    private String getOperation(Operand leftOpe, Operand rightOpe, Operator operator, int total) {
-        return leftOpe.getValue() + " " + operator.getSymbol() + " " + rightOpe.getValue() + " = " + total;
+    private String getOperation(Operand left, Operand right, Operator operator, int total) {
+        return left.getValue() + " " + operator.getSymbol() + " " + right.getValue() + " = " + total;
     }
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("Computer solution :\n");
-        Arrays.stream(finalOperations).filter(Objects::nonNull).forEach(v -> builder.append(v).append("\n"));
+        StringBuilder builder = new StringBuilder("Computer solution :\n");
+
+        Arrays.stream(finalOperations)
+            .filter(Objects::nonNull)
+            .forEach(v -> builder.append(v).append("\n"));
+
         return builder.toString();
     }
 }

@@ -4,56 +4,56 @@ import com._1irda.compte.enums.Operator;
 
 public class ComputedOperand {
 
-    private final Operand leftOpe;
+    private final Operand left;
 
-    private final Operand rightOpe;
+    private final Operand right;
 
     private final Operator operator;
 
     private Operand result;
 
-    public ComputedOperand(Operand left, Operand right, Operator arithmeticOperator) {
-        leftOpe = left;
-        rightOpe = right;
-        operator = arithmeticOperator;
-        compute();
+    public ComputedOperand(Operand l, Operand r, Operator ope) {
+        left = l;
+        right = r;
+        operator = ope;
     }
 
-    private void compute() {
+    private ComputedOperand compute() {
         switch (operator) {
-            case ADDITION -> result = new Operand(leftOpe.getValue() + rightOpe.getValue());
-            case SUBTRACTION -> result = new Operand(leftOpe.getValue() - rightOpe.getValue());
+            case ADDITION -> result = new Operand(left.getValue() + right.getValue());
+            case SUBTRACTION -> result = new Operand(left.getValue() - right.getValue());
             case MULTIPLICATION -> {
                 if (isCorrectMultiplication()) {
-                    result = new Operand(leftOpe.getValue() * rightOpe.getValue());
+                    result = new Operand(left.getValue() * right.getValue());
                 } else {
                     result = new Operand(Integer.MAX_VALUE);
                 }
             }
             case DIVISION -> {
                 if (isCorrectDivision()) {
-                    result = new Operand(leftOpe.getValue() / rightOpe.getValue());
+                    result = new Operand(left.getValue() / right.getValue());
                 } else {
                     result = new Operand(Integer.MAX_VALUE);
                 }
             }
         }
+        return this;
     }
 
     private boolean isCorrectMultiplication() {
-        return leftOpe.getValue() != 1 && rightOpe.getValue() != 1;
+        return left.getValue() != 1 && right.getValue() != 1;
     }
 
     private boolean isCorrectDivision() {
-        return rightOpe.getValue() != 0 && rightOpe.getValue() != 1 && leftOpe.getValue() % rightOpe.getValue() == 0;
+        return right.getValue() != 0 && right.getValue() != 1 && left.getValue() % right.getValue() == 0;
     }
 
-    public Operand getLeftOpe() {
-        return leftOpe;
+    public Operand getleft() {
+        return left;
     }
 
-    public Operand getRightOpe() {
-        return rightOpe;
+    public Operand getright() {
+        return right;
     }
 
     public Operand getResult() {

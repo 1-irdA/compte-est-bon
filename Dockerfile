@@ -1,4 +1,4 @@
-FROM openjdk:latest
+FROM openjdk
 
 COPY compte-est-bon.jar /app/game.jar
 

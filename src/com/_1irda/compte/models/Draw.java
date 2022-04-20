@@ -27,13 +27,14 @@ public class Draw {
     }
 
     public void update(ComputedOperand toAdd) {
-        removeOperand(toAdd.getLeftOpe());
-        removeOperand(toAdd.getRightOpe());
+        removeOperand(toAdd.getleft());
+        removeOperand(toAdd.getright());
         operands.add(toAdd.getResult());
     }
 
     private void removeOperand(Operand toRemove) {
         int operandsSize = operands.size();
+
         for (int i = 0; i < operands.size() && operandsSize == operands.size(); i++) {
             if (operands.get(i).getValue() == toRemove.getValue()) {
                 operands.remove(i);
@@ -42,19 +43,18 @@ public class Draw {
     }
 
     public boolean isOperandsInDraw(ComputedOperand toCheck) {
-        boolean isLeftOpePresent = false;
-        boolean isRightOpePresent = false;
+        boolean isleftPresent = false;
+        boolean isrightPresent = false;
 
         for (Operand op : operands) {
-            if (op.getValue() == toCheck.getLeftOpe().getValue()) {
-                isLeftOpePresent = true;
+            if (op.getValue() == toCheck.getleft().getValue()) {
+                isleftPresent = true;
             }
-            if (op.getValue() == toCheck.getRightOpe().getValue()) {
-                isRightOpePresent = true;
+            if (op.getValue() == toCheck.getright().getValue()) {
+                isrightPresent = true;
             }
         }
-
-        return isLeftOpePresent && isRightOpePresent;
+        return isleftPresent && isrightPresent;
     }
 
     @Override
