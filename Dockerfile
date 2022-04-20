@@ -1,9 +1,7 @@
-FROM openjdk
+FROM openjdk:18
 
-COPY . app/
+COPY compte-est-bon.jar app/compte.jar
 
 WORKDIR app/
 
-RUN javac *.java
-
-CMD ["java", "ConsoleGame"]
+CMD ["java", "-jar", "compte.jar"]
