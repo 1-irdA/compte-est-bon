@@ -59,9 +59,12 @@ public class Draw {
 
     @Override
     public String toString() {
-        StringBuilder toBuild = new StringBuilder();
-        toBuild.append("To compute : ").append(toCompute).append("\nDraw : ");
-        operands.forEach(o -> toBuild.append(o.getValue()).append(" "));
+        StringBuilder toBuild = new StringBuilder("To compute : ");
+
+        toBuild.append(toCompute)
+                .append("\nDraw : ");
+        operands.forEach(o -> toBuild.append(o.getValue())
+                .append(" "));
         return toBuild.append("\n").toString();
     }
 }
